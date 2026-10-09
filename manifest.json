@@ -1,0 +1,56 @@
+{
+  "manifest_version": 3,
+  "name": "Larp Radar",
+  "version": "0.2.0",
+  "description": "Tags X, Instagram and LinkedIn posts as news, gem, larp, fearmongering or slop with Jev, and pulls out the real takeaway.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_page": "options.html",
+  "action": {
+    "default_title": "Larp Radar settings",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://x.com/*",
+        "https://twitter.com/*",
+        "https://www.instagram.com/*",
+        "https://www.linkedin.com/*"
+      ],
+      "exclude_matches": [
+        "https://x.com/messages/*",
+        "https://x.com/i/chat/*",
+        "https://x.com/settings/*",
+        "https://twitter.com/messages/*",
+        "https://www.instagram.com/direct/*",
+        "https://www.instagram.com/accounts/*",
+        "https://www.linkedin.com/messaging/*",
+        "https://www.linkedin.com/mypreferences/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

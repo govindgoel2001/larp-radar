@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Larp Radar settings</title>
+<style>
+  :root { color-scheme: light dark; --bg: #fafafa; --fg: #111; --muted: #666; --line: #ddd; --acc: #e5484d; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --fg: #eee; --muted: #999; --line: #333; } }
+  body { background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; max-width: 560px; margin: 40px auto; padding: 0 16px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  p.sub { color: var(--muted); margin: 0 0 28px; }
+  label { display: block; font-weight: 600; margin: 20px 0 6px; }
+  small { display: block; color: var(--muted); font-weight: 400; }
+  input[type=text], input[type=password], select { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: inherit; font: inherit; }
+  input[type=range] { width: 100%; }
+  .row { display: flex; gap: 10px; align-items: center; margin-top: 20px; }
+  .row label { margin: 0; }
+  button { padding: 9px 16px; border: 0; border-radius: 6px; background: var(--fg); color: var(--bg); font: inherit; font-weight: 600; cursor: pointer; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: -12px 0 8px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  .checks { display: flex; gap: 18px; flex-wrap: wrap; }
+  .checks label { font-weight: 400; margin: 0; display: flex; gap: 6px; align-items: center; }
+  #status { margin-top: 14px; color: var(--muted); white-space: pre-wrap; }
+</style>
+</head>
+<body>
+  <h1>Larp Radar</h1>
+  <p class="sub">Jev labels each post and scores how much of it is larp. Gemini Flash writes the takeaway, and on Instagram it reads reel frames and carousel slides first. Only post text, the author's name and cropped frames of the post itself leave your browser.</p>
+  <div class="legend">
+    <span><i style="background:#1d9bf0"></i>news</span>
+    <span><i style="background:#f2b705"></i>gem</span>
+    <span><i style="background:#f4212e"></i>larp</span>
+    <span><i style="background:#a855f7"></i>fearmongering</span>
+    <span><i style="background:#8b98a5"></i>slop</span>
+  </div>
+
+  <label for="apiKey">OpenRouter API key
+    <small>Stored only in this browser profile. Type it here, never in a chat.</small></label>
+  <input id="apiKey" type="password" autocomplete="off" placeholder="sk-or-...">
+
+  <div class="row"><input id="enabled" type="checkbox"><label for="enabled">Radar on</label></div>
+
+  <label for="mode">What happens to junk posts
+    <small>Badge just labels them. Dim fades them until you hover. Hide collapses them to one line.</small></label>
+  <select id="mode">
+    <option value="badge">Badge only</option>
+    <option value="dim">Dim</option>
+    <option value="hide">Hide</option>
+  </select>
+
+  <label>Treat these labels as junk too
+    <small>A post counts as junk when its larp score is over the threshold or its label is ticked here.</small></label>
+  <div class="checks">
+    <label><input type="checkbox" name="junk" value="larp">larp</label>
+    <label><input type="checkbox" name="junk" value="fearmongering">fearmongering</label>
+    <label><input type="checkbox" name="junk" value="slop">slop</label>
+    <label><input type="checkbox" name="junk" value="news">news</label>
+  </div>
+
+  <label for="threshold">Larp threshold: <span id="thresholdVal"></span>%</label>
+  <input id="threshold" type="range" min="30" max="95" step="5">
+
+  <div class="row"><input id="takeaways" type="checkbox"><label for="takeaways">Write a one-line takeaway under each post</label></div>
+
+  <label for="textModel">Model for takeaways and deep dives
+    <small>Any OpenRouter chat model id.</small></label>
+  <input id="textModel" type="text">
+
+  <label for="jevModel">Jev model</label>
+  <input id="jevModel" type="text">
+
+  <div class="row"><button id="save">Save</button><button id="test">Test with a sample post</button></div>
+  <div id="status"></div>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>

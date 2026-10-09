@@ -1,0 +1,10 @@
+{
+  "name": "larp-radar",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node tests/live-check.js",
+    "zip": "python scripts/package.py"
+  },
+  "version": "0.2.0"
+}
